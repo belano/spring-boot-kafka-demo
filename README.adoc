@@ -1,0 +1,32 @@
+= Spring Boot Kafka demo application
+
+Sample application demonstrating the usage of Spring Boot & Kafka.
+
+.Requirements
+* Java 11
+* Docker & Compose
+
+== Running the application
+
+Kafka runs in a docker container which can be started via docker-compose (see `/src/test/resources/docker/docker-compose.yml`).
+
+To run this project, first start the Kafka container:
+
+`docker-compose -f /src/test/resources/docker/docker-compose.yml up`
+
+For tearing down the Kafka container
+
+`docker-compose -f /src/test/resources/docker/docker-compose.yml down --volumes --remove-orphans > docker.log 2>&1 &`
+
+Once the container is up and running, then run the application using maven wrapper:
+
+`./mvnw spring-boot:run`
+
+Then you will see in the console/application.log the flow of messages produced/consumed
+
+[source]
+----
+18:39:24.673 [scheduling-1] INFO  [] com.belano.app.ScheduledEventSender - Some Event Scheduled Kafka Message Produced {id:73519469-028b-4e26-94e0-88aaf85311e5}
+18:39:24.681 [scheduling-1] INFO  [] com.belano.app.EventSender - Some Event Kafka Message Produced {id:73519469-028b-4e26-94e0-88aaf85311e5} in [8]ms
+18:39:24.691 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  [] c.b.SpringBootKafkaDemoApplication - Some Event Kafka Message Consumed {id:73519469-028b-4e26-94e0-88aaf85311e5}
+----

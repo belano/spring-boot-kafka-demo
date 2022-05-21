@@ -1,0 +1,43 @@
+version: "3"
+services:
+  zookeeper:
+    image: 'bitnami/zookeeper:latest'
+    container_name: docker_zookeeper_1
+    ports:
+      - '2181:2181'
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+  kafka:
+    image: 'bitnami/kafka:latest'
+    container_name: docker_kafka_1
+    ports:
+      - '9093:9093'
+    environment:
+      - KAFKA_BROKER_ID=1
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CLIENT:PLAINTEXT,EXTERNAL:PLAINTEXT
+      - KAFKA_CFG_LISTENERS=CLIENT://:9092,EXTERNAL://:9093
+      - KAFKA_CFG_ADVERTISED_LISTENERS=CLIENT://kafka:9092,EXTERNAL://localhost:9093
+      - KAFKA_INTER_BROKER_LISTENER_NAME=CLIENT
+    depends_on:
+      - zookeeper
+  create-topics:
+    image: confluentinc/cp-kafka:5.5.0
+    hostname: create-topics
+    container_name: create-topics
+    depends_on:
+      - kafka
+    command: "
+        bash -c 'cub kafka-ready -b kafka:9092 1 120 && \
+        kafka-topics --create --if-not-exists --zookeeper zookeeper:2181 --partitions 2 --replication-factor 1 --topic KAFKA_LOCAL_SOME_EVENTS && \
+        kafka-topics --create --if-not-exists --zookeeper zookeeper:2181 --partitions 2 --replication-factor 1 --topic KAFKA_LOCAL_SOME_EVENTS_DLT'"
+    environment:
+      KAFKA_BROKER_ID: ignored
+      KAFKA_ZOOKEEPER_CONNECT: ignored
+
+volumes:
+  zookeeper_data:
+    driver: local
+  kafka_data:
+    driver: local
