@@ -30,3 +30,8 @@ Then you will see in the console/application.log the flow of messages produced/c
 18:39:24.681 [scheduling-1] INFO  [] com.belano.app.EventSender - Some Event Kafka Message Produced {id:73519469-028b-4e26-94e0-88aaf85311e5} in [8]ms
 18:39:24.691 [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] INFO  [] c.b.SpringBootKafkaDemoApplication - Some Event Kafka Message Consumed {id:73519469-028b-4e26-94e0-88aaf85311e5}
 ----
+
+== Links
+* https://rmoff.net/2018/08/02/kafka-listeners-explained/[Kafka Listeners explained]
+* https://github.com/bitnami/bitnami-docker-kafka/blob/master/README.md#accessing-kafka-with-internal-and-external-clients[Apache Kafka packaged by Bitnami]
+
