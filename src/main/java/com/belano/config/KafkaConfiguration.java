@@ -45,7 +45,7 @@ public class KafkaConfiguration {
     }
 
     @Bean("someEventsContainerFactory")
-    public KafkaListenerContainerFactory portfolioEventsContainerFactory(
+    public KafkaListenerContainerFactory someEventsContainerFactory(
             ConcurrentKafkaListenerContainerFactoryConfigurer configurer,
             @Qualifier("someEventsConsumerFactory") ConsumerFactory someEventsConsumerFactory,
             @Qualifier("someEventsKafkaTemplate") KafkaTemplate someEventsKafkaTemplate) {
@@ -56,15 +56,15 @@ public class KafkaConfiguration {
 
     @Primary
     @Bean("someEventsConsumerFactory")
-    public ConsumerFactory<String, SomeEvent> portfolioEventsConsumerFactory() {
+    public ConsumerFactory<String, SomeEvent> someEventsConsumerFactory() {
         return getConfigurer().createConsumerFactory();
     }
 
-    @Bean("portfolioEventsConsumer")
-    public Consumer<String, SomeEvent> portfolioEventsConsumer(
+    @Bean("someEventsConsumer")
+    public Consumer<String, SomeEvent> someEventsConsumer(
             @Qualifier("someEventsConsumerFactory")
-                    ConsumerFactory<String, SomeEvent> portfolioEventsConsumerFactory) {
-        return portfolioEventsConsumerFactory.createConsumer("DEMO", "DEMO");
+                    ConsumerFactory<String, SomeEvent> someEventsConsumerFactory) {
+        return someEventsConsumerFactory.createConsumer("DEMO", "DEMO");
     }
 
     @Bean
