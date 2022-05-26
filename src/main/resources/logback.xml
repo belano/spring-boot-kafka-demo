@@ -7,13 +7,13 @@
             <maxHistory>5</maxHistory>
         </rollingPolicy>
         <encoder>
-            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level [%X{lws-correlation-id}] %logger{36} - %msg%n</pattern>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level [%X{correlation-id}] %logger{36} - %msg%n</pattern>
         </encoder>
 
     </appender>
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level [%X{lws-correlation-id}] %logger{36} - %msg%n</pattern>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level [%X{correlation-id}] %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
     <logger name="com.belano" level="info"/>
